@@ -5,10 +5,6 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 
 class UrlList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleClick = (e) => {
     this.props.onClick(e.currentTarget.id);
   };

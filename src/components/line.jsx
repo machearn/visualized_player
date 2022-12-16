@@ -12,10 +12,6 @@ const RECT_COLOR = '#e9dcf7';
 const OFFSET = 10;
 
 class Line extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.canvas = new Canvas({
       container: "Line",
