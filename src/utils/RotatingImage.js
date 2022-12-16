@@ -9,11 +9,12 @@ const {transform}=ext
 //     r : raius of circle
 //     shadowColor
 // }
-export function getImageCircle(canvas,imageCircleConfig) {
-    const shadowConfig = (imageCircleConfig && imageCircleConfig.shadowColor)?{
+export default function getImageCircle(canvas, x, y, r, shadowColor) {
+    const shadowConfig = shadowColor ? {
         shadowColor,
         shadowBlur: 16
     } : {}
+
     // using g-canvas to create a circle
     canvas.addShape('circle',{
         attrs:{
