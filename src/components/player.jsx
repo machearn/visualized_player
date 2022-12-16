@@ -2,6 +2,8 @@ import React, { createRef } from "react";
 import MusicContext from '../utils/MusicContext'
 import style from './player.module.scss'
 import Line from "./line";
+import AudioPlayer from "react-h5-audio-player";
+import 'react-h5-audio-player/lib/styles.css';
 
 // create a context
 export const MusicVisualizerContext = new MusicContext();
@@ -61,7 +63,7 @@ export default class Player extends React.Component {
                         <input type="file" style={{display: 'none'}} ref={hiddenFileInput} onChange={this.handleFileChange} />
                     </div>
                     <div className={style.audioWrapper}>
-                        <audio controls onPlay={this.play} onPause={this.pause} ref={audio} src={this.state.audioUrl} crossOrigin="anonymous"></audio>
+                        <AudioPlayer showSkipControls style={{ margin: "auto", width: "33%" }} onPlay={this.play} onPause={this.pause} onClickNext={this.next} onClickPrevious={this.prev} ref={this.audio} src={this.state.audioUrlList[this.state.urlIndex]} crossOrigin="anonymous" />
                     </div>
                     <div className={style.exampleWrapper}>
                         <SLine isPlaying={this.state.isPlaying} data={this.state.audioData} />
