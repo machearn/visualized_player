@@ -1,17 +1,17 @@
 import React, { createRef } from "react";
-import {MusicContext} from '../utils/MusicContext'
+import MusicContext from '../utils/MusicContext'
 import style from './player.module.scss'
-import SLine from './s-line'
+import Line from "./line";
 
 // create a context
-export const MusicVisualizerContext=new MusicContext();
+export const MusicVisualizerContext = new MusicContext();
 // Player commponent
-export default class Player extends React.Component{
-    componentDidMount(){
-        MusicVisualizerContext.setAudioElement(audio.current) // associate audio as the source of context
+export default class Player extends React.Component {
+    componentDidMount() {
+        MusicVisualizerContext.setAudioElement(this.audio.current.audio.current); // associate audio as the source of context
     }
 
-    constructor(){
+    constructor() {
         super()
         // refs
         audio=createRef()
