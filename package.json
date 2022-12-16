@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "gl-matrix": "^3.3.0",
-    "@antv/g-lite": "^1.0.0",
-    "@antv/g-canvas": "^1.9.0",
-    "@types/d3": "^7.0.0",
+    "@antv/g-canvas": "^0.5.10",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.0",
+    "@types/d3": "^6.7.0",
     "d3": "^7.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-h5-audio-player": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
