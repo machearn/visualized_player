@@ -59,6 +59,14 @@ export default class Player extends React.Component {
     this.raf && cancelAnimationFrame(this.raf)
   }
 
+  end = () => {
+    if (this.state.urlIndex === this.state.audioUrlList.length - 1) {
+      this.pause()
+    } else {
+      this.next()
+    }
+  }
+
   chooseLocalMusic = () => {
     this.hiddenFileInput.current.click()
   }
@@ -86,7 +94,7 @@ export default class Player extends React.Component {
             <div style={{padding: "10px 0"}}><strong>{this.state.audioNameList[this.state.urlIndex]}</strong></div>
           </div>
           <div className={style.audioWrapper}>
-            <AudioPlayer showSkipControls style={{ margin: "auto", width: "33%" }} onPlay={this.play} onPause={this.pause} onClickNext={this.next} onClickPrevious={this.prev} ref={this.audio} src={this.state.audioUrlList[this.state.urlIndex]} crossOrigin="anonymous" />
+            <AudioPlayer showSkipControls style={{ margin: "auto", width: "33%" }} onPlay={this.play} onPause={this.pause} onEnded={this.end} onClickNext={this.next} onClickPrevious={this.prev} ref={this.audio} src={this.state.audioUrlList[this.state.urlIndex]} crossOrigin="anonymous" />
           </div>
           <div className={style.operationWrapper}>
             <Button variant="contained" color="primary" style={{ margin: "10px" }} onClick={this.chooseLocalMusic}>Choose local music files</Button>
