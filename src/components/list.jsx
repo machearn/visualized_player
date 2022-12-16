@@ -7,19 +7,9 @@ import ListSubheader from "@mui/material/ListSubheader";
 class UrlList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selected: this.props.selected,
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.selected !== this.props.selected) {
-      this.setState({ selected: this.props.selected });
-    }
   }
 
   handleClick = (e) => {
-    this.setState({ selected: e.currentTarget.id });
     this.props.onClick(e.currentTarget.id);
   };
 
@@ -35,7 +25,7 @@ class UrlList extends Component {
               key={index}
               id={index}
               onClick={this.handleClick}
-              selected={this.state.selected === index}
+              selected={this.props.selected === index}
             >
               <ListItemText primary={name} />
             </ListItemButton>
