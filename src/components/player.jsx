@@ -2,8 +2,10 @@ import React, { createRef } from "react";
 import MusicContext from '../utils/MusicContext'
 import style from './player.module.scss'
 import Line from "./line";
+import UrlList from "./list";
 import AudioPlayer from "react-h5-audio-player";
 import 'react-h5-audio-player/lib/styles.css';
+import Button from '@mui/material/Button';
 
 // create a context
 export const MusicVisualizerContext = new MusicContext();
@@ -16,57 +18,77 @@ export default class Player extends React.Component {
     constructor() {
         super()
         // refs
-        audio=createRef()
-        hiddenFileInput=createRef()
-        this.lastTime=0
+        this.audio = createRef()
+        this.hiddenFileInput = createRef()
+        this.lastTime = 0
         this.raf = 0
-        this.state={musicName:'Please load a music...',audioUrl:'',audioData:[],isPlaying:false}
+        this.state = {
+            urlIndex: 0,
+            audioData: [],
+            isPlaying: false,
+            audioUrlList: [],
+            audioNameList: []
+        }
     }
 
-    step=(timestamp)=> {
+    step = (timestamp) => {
         if (!this.lastTime) this.lastTime = timestamp
-        const progress  = timestamp - this.lastTime
+        const progress = timestamp - this.lastTime
         if (progress === 0 || progress > 0) {
-            this.setState({audioData:[...MusicVisualizerContext.getFrequencyData()]}) //transfer frequency data
+            this.setState({ audioData: [...MusicVisualizerContext.getFrequencyData()] }) //transfer frequency data
             this.lastTime = timestamp
         }
-        this.raf = requestAnimationFrame(step)
-    }
-    
-    play=()=>{
-        this.setState({isPlaying:true}) //change playing states
-        raf=requestAnimationFrame(step)
+        this.raf = requestAnimationFrame(this.step)
     }
 
-    pause=()=>{
-        this.setState({isPlaying:false}) //change playing states
-        raf && cancelAnimationFrame(raf)
+    play = () => {
+        this.setState({ isPlaying: true }) //change playing states
+        this.raf = requestAnimationFrame(this.step)
     }
 
-    chooseLocalMusic=()=>{
+    next = () => {
+        this.setState({ urlIndex: (this.state.urlIndex + 1) % this.state.audioUrlList.length })
+    }
+
+    prev = () => {
+        this.setState({ urlIndex: (this.state.urlIndex - 1 + this.state.audioUrlList.length) % this.state.audioUrlList.length })
+    }
+
+    pause = () => {
+        this.setState({ isPlaying: false }) //change playing states
+        this.raf && cancelAnimationFrame(this.raf)
+    }
+
+    chooseLocalMusic = () => {
         this.hiddenFileInput.current.click()
     }
 
-    handleFileChange=(e)=>{
-        const file=e.target.files[0]
-        const url=URL.createObjectURL(file)
-        this.setState({musicName:file.name,audioUrl:url})
+    handleFileChange = (e) => {
+        const files = e.target.files
+        const urls = Array.from(files).map(file => URL.createObjectURL(file))
+        const names = Array.from(files).map(file => file.name)
+        this.setState({ audioUrlList: urls })
+        this.setState({ audioNameList: names })
     }
 
-    render(){
+    handleChooseUrl = (index) => {
+        this.setState({ urlIndex: index })
+    }
+
+    render() {
         return (
             <div>
                 <main className={style.page}>
-                    <div className={style.operationWrapper}>
-                        <button className="btn m10" onClick={this.chooseLocalMusic}>Choose a local music</button>
-                        <div className="strong-text m10" style={{minWidth: '200px'}}>{musicName}</div>
-                        <input type="file" style={{display: 'none'}} ref={hiddenFileInput} onChange={this.handleFileChange} />
+                    <div className={style.exampleWrapper}>
+                        <Line isPlaying={this.state.isPlaying} data={this.state.audioData} />
                     </div>
                     <div className={style.audioWrapper}>
                         <AudioPlayer showSkipControls style={{ margin: "auto", width: "33%" }} onPlay={this.play} onPause={this.pause} onClickNext={this.next} onClickPrevious={this.prev} ref={this.audio} src={this.state.audioUrlList[this.state.urlIndex]} crossOrigin="anonymous" />
                     </div>
-                    <div className={style.exampleWrapper}>
-                        <SLine isPlaying={this.state.isPlaying} data={this.state.audioData} />
+                    <div className={style.operationWrapper}>
+                        <Button variant="contained" color="primary" style={{ margin: "10px" }} onClick={this.chooseLocalMusic}>Choose local music files</Button>
+                        <UrlList nameList={this.state.audioNameList} onClick={this.handleChooseUrl} selected={this.state.urlIndex} />
+                        <input type="file" style={{ display: 'none' }} ref={this.hiddenFileInput} onChange={this.handleFileChange} multiple />
                     </div>
                 </main>
             </div>
