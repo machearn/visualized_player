@@ -1,4 +1,4 @@
-const audioContext = new AudioContext();
+const audioContext = new window.AudioContext();
 
 class MusicContext {
   constructor(options) {
@@ -9,15 +9,23 @@ class MusicContext {
     this.analyser = audioContext.createAnalyser();
     this.analyser.connect(this.gainNode);
 
-    this.analyser.fftSize = options.size * 2 || 2048;
+    this.size = 128;
+    if (options && options.size) {
+      this.size = options.size;
+    }
 
-    if (options.audioElement) {
+    this.analyser.fftSize = this.size * 2;
+
+    if (options && options.audioElement) {
       this.source = audioContext.createMediaElementSource(options.audioElement);
       this.source.connect(this.analyser);
     }
 
     this.data = new Uint8Array(this.analyser.frequencyBinCount);
+    this.resumeAudioContext();
+  }
 
+  resumeAudioContext() {
     if (audioContext) {
       const resumeAudio = () => {
         if (audioContext.state === 'suspended') { audioContext.resume(); }
@@ -44,6 +52,10 @@ class MusicContext {
   getFrequencyData() {
     this.analyser.getByteFrequencyData(this.data);
     return this.data;
+  }
+
+  getSource() {
+    return this.source;
   }
 }
 
