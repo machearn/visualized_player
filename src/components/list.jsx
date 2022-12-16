@@ -27,7 +27,7 @@ class UrlList extends Component {
     return (
       <div style={{ margin: "auto", width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper", position: "relative", overflow: "auto", maxHeight: 300 }}
           subheader={<ListSubheader><span><strong>Play List</strong></span></ListSubheader>}
         >
           {this.props.nameList.map((name, index) => (
