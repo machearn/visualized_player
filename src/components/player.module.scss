@@ -1,18 +1,21 @@
 .page {
-    min-height: calc(100vh - 40px);
-    .operationWrapper {
-      margin: auto;
-    }
-    .audioWrapper {
-      padding: 0 20px;
-      margin: 10px 0;
-    }
-    .exampleWrapper {
-      padding: 0 10px;
-      display: flex;
-      flex-wrap: wrap;
-      transform: translate3d(0, 0, 0);
-      justify-content: center;
-      align-items: center;
-    }
+  min-height: calc(100vh - 40px);
+
+  .operationWrapper {
+    margin: auto;
   }
+
+  .audioWrapper {
+    padding: 0 20px;
+    margin: 10px 0;
+  }
+
+  .exampleWrapper {
+    padding: 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    transform: translate3d(0, 0, 0);
+    justify-content: center;
+    align-items: center;
+  }
+}
