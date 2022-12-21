@@ -88,18 +88,46 @@ export default class Player extends React.Component {
       <div>
         <main className={style.page}>
           <div className={style.exampleWrapper}>
-            <Line isPlaying={this.state.isPlaying} data={this.state.audioData} />
+            <Line
+              isPlaying={this.state.isPlaying}
+              data={this.state.audioData} />
           </div>
           <div className={style.operationWrapper}>
-            <div style={{padding: "10px 0"}}><strong>{this.state.audioNameList[this.state.urlIndex]}</strong></div>
+            <div style={{padding: "10px 0"}}>
+              <strong>{this.state.audioNameList[this.state.urlIndex]}</strong>
+            </div>
           </div>
           <div className={style.audioWrapper}>
-            <AudioPlayer showSkipControls style={{ margin: "auto", width: "33%" }} onPlay={this.play} onPause={this.pause} onEnded={this.end} onClickNext={this.next} onClickPrevious={this.prev} ref={this.audio} src={this.state.audioUrlList[this.state.urlIndex]} crossOrigin="anonymous" />
+            <AudioPlayer
+              showSkipControls
+              style={{ margin: "auto", width: "33%" }}
+              onPlay={this.play}
+              onPause={this.pause}
+              onEnded={this.end}
+              onClickNext={this.next}
+              onClickPrevious={this.prev}
+              ref={this.audio}
+              src={this.state.audioUrlList[this.state.urlIndex]}
+              crossOrigin="anonymous" />
           </div>
           <div className={style.operationWrapper}>
-            <Button variant="contained" color="primary" style={{ margin: "10px" }} onClick={this.chooseLocalMusic}>Choose local music files</Button>
-            <UrlList nameList={this.state.audioNameList} onClick={this.handleChooseUrl} selected={this.state.urlIndex} />
-            <input type="file" style={{ display: 'none' }} ref={this.hiddenFileInput} onChange={this.handleFileChange} multiple />
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ margin: "10px" }}
+              onClick={this.chooseLocalMusic}>
+                Choose local music files
+            </Button>
+            <UrlList
+              nameList={this.state.audioNameList}
+              onClick={this.handleChooseUrl}
+              selected={this.state.urlIndex} />
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              ref={this.hiddenFileInput}
+              onChange={this.handleFileChange}
+              multiple />
           </div>
         </main>
       </div>
